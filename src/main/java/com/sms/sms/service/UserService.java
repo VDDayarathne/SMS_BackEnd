@@ -5,6 +5,7 @@ import com.sms.sms.entity.User;
 import com.sms.sms.repo.UserRepo;
 import com.sms.sms.util.VarList;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,54 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
 @Transactional
+@AllArgsConstructor
 
 public class UserService{
+
+
+
     @Autowired
+    private final UserRepo userRepo;
+
+    public List<User> getUsers() {
+        return userRepo.findAll();
+    }
+
+    public User getUser(String email, String password) {
+        Optional<User> userOptional = userRepo.findUserByEmail(email);
+        if (userOptional.isPresent()) {
+            if (!userOptional.get().getPassword().equals(password)) {
+                throw new IllegalStateException("password is not correct for email: "+ email);
+            }
+        }else {
+            throw new IllegalStateException("email: " + email + " is not present");
+        }
+        return userOptional.get();
+    }
+
+    public void addNewUser(User user) {
+        Optional<User> userOptional = userRepo
+                .findUserByEmail(user.getEmail());
+        if(userOptional.isPresent()) {
+            throw new IllegalStateException("email already taken");
+        }
+        userRepo.save(user);
+    }
+
+    public void deleteUserByEmail(String email) {
+        Optional<User> userOptional = userRepo
+                .findUserByEmail(email);
+        if(userOptional.isEmpty()) {
+            throw new IllegalStateException("user with email: " + email + " doesn't exist");
+        }
+        userRepo.deleteById(userOptional.get().getId());
+    }
+    /*@Autowired
     private ModelMapper modelMapper;
 
     @Autowired
@@ -64,7 +106,7 @@ public class UserService{
         else {
             return VarList.RSP_NO_DATA_FOUND;
         }
-    }
+    }*/
 
 
     /*public UserDTO saveUser(UserDTO userDTO) {

@@ -1,28 +1,59 @@
 package com.sms.sms.controller;
 
-import com.sms.sms.dto.ResponseDTO;
-import com.sms.sms.dto.UserDTO;
+import com.sms.sms.entity.User;
 import com.sms.sms.service.UserService;
-import com.sms.sms.util.VarList;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/v1/user")
-@CrossOrigin
+@CrossOrigin(origins = "http://192.168.56.1:3000")
+@AllArgsConstructor
+
 
 public class userController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private ResponseDTO responseDTO;
 
-    @PostMapping ("/saveUser")
+
+    @GetMapping("/all")
+    public List<User> getUsers() {
+        return userService.getUsers();
+    }
+
+    @GetMapping("/get")
+    public User getUser(@RequestParam(name = "email") String email,
+                                @RequestParam(name = "password") String password) {
+        return userService.getUser(email,password);
+    }
+
+    @PostMapping("/add")
+    public void registerNewUser(@RequestBody User user) {
+        userService.addNewUser(user);
+    }
+
+    @DeleteMapping("/delete")
+    public void deleteUserByEmail(@RequestParam(name = "email") String email) {
+        userService.deleteUserByEmail(email);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*@PostMapping ("/saveUser")
     public ResponseEntity saveUser(@RequestBody UserDTO userDTO) {
         try {
             String res = userService.saveUser(userDTO);
@@ -151,7 +182,7 @@ public class userController {
             return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-    }
+    }*/
 
 }
     /*
