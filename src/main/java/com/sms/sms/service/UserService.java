@@ -60,6 +60,11 @@ public class UserService{
         }
         userRepo.deleteById(userOptional.get().getId());
     }
+
+    public User getUserByEmail(String email) {
+        return userRepo.findUserByEmail(email).orElseThrow(() -> new IllegalStateException("email: " + email + " is not exist"));
+    }
+
     /*@Autowired
     private ModelMapper modelMapper;
 

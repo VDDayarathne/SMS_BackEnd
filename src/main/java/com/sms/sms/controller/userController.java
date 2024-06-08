@@ -34,11 +34,20 @@ public class userController {
     @PostMapping("/add")
     public void registerNewUser(@RequestBody User user) {
         userService.addNewUser(user);
+
     }
 
     @DeleteMapping("/delete")
     public void deleteUserByEmail(@RequestParam(name = "email") String email) {
         userService.deleteUserByEmail(email);
+    }
+
+    @GetMapping("/me")
+    public User getLoggedInUser(@RequestHeader("Authorization") String token) {
+        // Verify token and return the corresponding user
+        // For simplicity, assume the token is the user's email
+        String email = token;
+        return userService.getUserByEmail(email);
     }
 
 
