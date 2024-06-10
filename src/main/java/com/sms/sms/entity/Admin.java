@@ -28,7 +28,7 @@ public class Admin {
 
     private Long id;
     @Column(
-            name = "adminname",
+            name = "adminName",
             nullable = false,
             columnDefinition = "TEXT"
     )

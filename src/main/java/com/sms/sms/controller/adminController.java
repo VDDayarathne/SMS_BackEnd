@@ -2,7 +2,6 @@ package com.sms.sms.controller;
 
 import com.sms.sms.dto.AdminDTO;
 import com.sms.sms.service.AdminService;
-import com.sms.sms.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +15,7 @@ import java.util.List;
 
 public class adminController {
 
-    @Autowired
-    private UserService userService;
+
     @Autowired
     private AdminService adminService;
 
@@ -47,7 +45,7 @@ public class adminController {
     }
 
     @GetMapping("/notifications")
-    public List<String> getNotifications() {
+    public List<String> getNotifications(@RequestParam(name = "adminEmail",required = false) String adminEmail ) {
         return adminService.getNotifications();
     }
 
