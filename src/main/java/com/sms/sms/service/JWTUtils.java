@@ -20,7 +20,7 @@ public class JWTUtils {
     private  static  final long EXPIRATION_TIME = 86400000;  //24 hours
 
     public JWTUtils(){
-        String secreteString = "ef3n1uRCLMzSuAPhkdvb5X2vsQQuv4ee";
+        String secreteString = "mysecretekey";
         byte[] keyBytes = Base64.getDecoder().decode(secreteString.getBytes(StandardCharsets.UTF_8));
         this.Key = new SecretKeySpec(keyBytes, SignatureAlgorithm.HS256.getJcaName());
     }
@@ -59,5 +59,7 @@ public class JWTUtils {
     public  boolean isTokenExpired(String token){
         return extractClaims(token, Claims::getExpiration).before(new Date());
     }
+
+
 
 }

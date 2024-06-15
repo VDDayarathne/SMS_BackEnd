@@ -21,14 +21,14 @@ public class OurUsers implements UserDetails {
     private String email;
     private String name;
     private String password;
-    private String city;
     private String role;
+    private String faculty;
+    private String indexnumber;
+    private String bio;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
-        return authorities;
+        return List.of(new SimpleGrantedAuthority(role));
     }
 
     @Override

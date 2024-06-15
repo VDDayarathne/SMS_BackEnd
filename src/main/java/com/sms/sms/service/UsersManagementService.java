@@ -4,6 +4,7 @@ package com.sms.sms.service;
 import com.sms.sms.dto.ReqRes;
 import com.sms.sms.entity.OurUsers;
 import com.sms.sms.repo.UsersRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,7 +42,6 @@ public class UsersManagementService {
         try {
             OurUsers ourUser = new OurUsers();
             ourUser.setEmail(registrationRequest.getEmail());
-            ourUser.setCity(registrationRequest.getCity());
             ourUser.setRole(registrationRequest.getRole());
             ourUser.setName(registrationRequest.getName());
             ourUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
@@ -164,6 +164,7 @@ public class UsersManagementService {
         return reqRes;
     }
 
+    @Transactional
     public ReqRes updateUser(Integer userId, OurUsers updatedUser) {
         ReqRes reqRes = new ReqRes();
         try {
@@ -172,8 +173,12 @@ public class UsersManagementService {
                 OurUsers existingUser = userOptional.get();
                 existingUser.setEmail(updatedUser.getEmail());
                 existingUser.setName(updatedUser.getName());
-                existingUser.setCity(updatedUser.getCity());
+                existingUser.setPassword(updatedUser.getPassword());
                 existingUser.setRole(updatedUser.getRole());
+                existingUser.setFaculty(updatedUser.getFaculty());
+                existingUser.setIndexnumber(updatedUser.getIndexnumber());
+                existingUser.setBio(updatedUser.getBio());
+
 
                 // Check if password is present in the request
                 if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
