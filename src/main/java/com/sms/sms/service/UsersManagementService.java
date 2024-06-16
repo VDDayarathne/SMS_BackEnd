@@ -44,6 +44,11 @@ public class UsersManagementService {
             ourUser.setEmail(registrationRequest.getEmail());
             ourUser.setRole(registrationRequest.getRole());
             ourUser.setName(registrationRequest.getName());
+            ourUser.setPassword(registrationRequest.getPassword());
+            ourUser.setFaculty(registrationRequest.getFaculty());
+            ourUser.setIndexnumber(registrationRequest.getIndexnumber());
+            ourUser.setBio(registrationRequest.getBio());
+
             ourUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
             OurUsers ourUsersResult = usersRepo.save(ourUser);
             if (ourUsersResult.getId()>0) {
@@ -67,6 +72,7 @@ public class UsersManagementService {
                     .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
                             loginRequest.getPassword()));
             var user = usersRepo.findByEmail(loginRequest.getEmail()).orElseThrow();
+            var userId = user.getId();
             var jwt = jwtUtils.generateToken(user);
             var refreshToken = jwtUtils.generateRefreshToken(new HashMap<>(), user);
             response.setStatusCode(200);
@@ -75,6 +81,7 @@ public class UsersManagementService {
             response.setRefreshToken(refreshToken);
             response.setExpirationTime("24Hrs");
             response.setMessage("Successfully Logged In");
+            response.setUserId(userId);
 
         }catch (Exception e){
             response.setStatusCode(500);
@@ -200,7 +207,6 @@ public class UsersManagementService {
         }
         return reqRes;
     }
-
 
     public ReqRes getMyInfo(String email){
         ReqRes reqRes = new ReqRes();

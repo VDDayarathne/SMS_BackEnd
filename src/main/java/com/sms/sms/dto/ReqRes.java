@@ -27,9 +27,7 @@ public class ReqRes {
     private String bio;
     private OurUsers ourUsers;
     private List<OurUsers> ourUsersList;
+    private Integer userId;
 
 
-    public void setOurUsers(OurUsers ourUsersResult) {
-
-    }
 }

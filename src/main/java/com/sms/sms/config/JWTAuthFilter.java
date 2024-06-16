@@ -2,7 +2,6 @@ package com.sms.sms.config;
 
 import com.sms.sms.service.JWTUtils;
 import com.sms.sms.service.OurUserDetailsService;
-import com.sms.sms.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

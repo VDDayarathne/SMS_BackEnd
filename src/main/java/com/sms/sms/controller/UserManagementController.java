@@ -18,7 +18,7 @@
         private UsersManagementService usersManagementService;
 
         @PostMapping("/auth/register")
-        public ResponseEntity<ReqRes> register(@RequestBody ReqRes reg){
+        public ResponseEntity<ReqRes> regeister(@RequestBody ReqRes reg){
             return ResponseEntity.ok(usersManagementService.register(reg));
         }
 
@@ -57,7 +57,7 @@
         @GetMapping("/adminuser/get-profile")
         public ResponseEntity<ReqRes> getMyProfile(){
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String email = authentication.getPrincipal().toString();
+            String email = authentication.getName();
             ReqRes response = usersManagementService.getMyInfo(email);
             return  ResponseEntity.status(response.getStatusCode()).body(response);
         }
