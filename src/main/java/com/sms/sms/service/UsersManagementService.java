@@ -180,8 +180,6 @@ public class UsersManagementService {
                 OurUsers existingUser = userOptional.get();
                 existingUser.setEmail(updatedUser.getEmail());
                 existingUser.setName(updatedUser.getName());
-                existingUser.setPassword(updatedUser.getPassword());
-                existingUser.setRole(updatedUser.getRole());
                 existingUser.setFaculty(updatedUser.getFaculty());
                 existingUser.setIndexnumber(updatedUser.getIndexnumber());
                 existingUser.setBio(updatedUser.getBio());

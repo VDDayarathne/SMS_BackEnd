@@ -13,9 +13,16 @@ public class EventService {
     @Autowired
     private EventRepo eventRepo;
 
-    public List<Event> getAllEvents() {
+    /*public List<Event> getAllEvents() {
         return eventRepo.findAll();
+    }*/
+
+    public List<Event> getAllEventsByUserEmail(String userEmail) {
+        return eventRepo.findByUserEmail(userEmail);
     }
+
+
+
 
     public Event createEvent(Event event) {
         return eventRepo.save(event);

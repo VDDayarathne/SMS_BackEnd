@@ -11,11 +11,15 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Data@ToString
+@Data
+@ToString
 @Table(name = "events",
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "events_title", columnNames = "title"
+                ),
+                @UniqueConstraint(
+                        name = "events_user_email", columnNames = {"user_email", "title"}
                 )
         }
 )
@@ -23,11 +27,9 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
     private String title;
-    @Column
     private String description;
-    @Column
     private Date date;
+    private String userEmail;
 
 }
