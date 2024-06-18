@@ -13,23 +13,16 @@ import java.util.Date;
 @Setter
 @Data
 @ToString
-@Table(name = "events",
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        name = "events_title", columnNames = "title"
-                ),
-                @UniqueConstraint(
-                        name = "events_user_email", columnNames = {"user_email", "title"}
-                )
-        }
-)
+@Table(name = "events")
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column
     private String title;
+    @Column
     private String description;
     private Date date;
-    private String userEmail;
+    private String email;
 
 }

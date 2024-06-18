@@ -32,17 +32,17 @@ public class EventController {
 
     @PostMapping("/{addEvent}")
     public Event createEvent(@RequestBody Event event, HttpServletRequest request) {
-        String userEmail = getAuthenticatedUser(request);
-        if (userEmail == null) {
+        String email = getAuthenticatedUser(request);
+        if (email == null) {
             throw new RuntimeException("Unauthorized access");
         }
-        event.setUserEmail(userEmail);
+        event.setEmail(email);
         return eventService.createEvent(event);
     }
 
     @GetMapping("/user/{userEmail}")
     public List<Event> getEventsByUserEmail(@PathVariable String userEmail) {
-        return eventService.getAllEventsByUserEmail(userEmail);
+        return eventService.getEventsByUserEmail(userEmail);
     }
 
     /*@GetMapping

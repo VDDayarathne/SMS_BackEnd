@@ -1,15 +1,20 @@
 package com.sms.sms.service;
 
 
+import com.sms.sms.dto.EventDTO;
 import com.sms.sms.dto.ReqRes;
+import com.sms.sms.entity.Event;
 import com.sms.sms.entity.OurUsers;
 import com.sms.sms.repo.UsersRepo;
 import jakarta.transaction.Transactional;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +30,8 @@ public class UsersManagementService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private EventService eventService;
 
     @Autowired
     public UsersManagementService(UsersRepo usersRepo, JWTUtils jwtUtils, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
@@ -226,6 +233,88 @@ public class UsersManagementService {
         return reqRes;
 
     }
+
+    public ReqRes createEvent(EventDTO eventDTO) {
+        ReqRes response = new ReqRes();
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String email = authentication.getName();
+
+            Event event = new Event();
+            event.setTitle(eventDTO.getTitle());
+            event.setDescription(eventDTO.getDescription());
+            event.setDate(eventDTO.getDate());
+            event.setEmail(email); // Set the user email from the authenticated user
+
+            event = eventService.createEvent(event);
+            response.setEvent(event);
+            response.setStatusCode(200);
+            response.setMessage("Event created successfully");
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error occurred while creating event: " + e.getMessage());
+        }
+        return response;
+    }
+
+    public ReqRes getEvents(String email) {
+        ReqRes response = new ReqRes();
+        try {
+            List<Event> events = eventService.getEventsByUserEmail(email);
+            response.setEvents(events);
+            response.setStatusCode(200);
+            response.setMessage("Events retrieved successfully");
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error occurred while retrieving events: " + e.getMessage());
+        }
+        return response;
+    }
+
+    public ReqRes getEvent(Long eventId) {
+        ReqRes response = new ReqRes();
+        try {
+            Event event = eventService.getEvent(eventId);
+            response.setEvent(event);
+            response.setStatusCode(200);
+            response.setMessage("Event retrieved successfully");
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error occurred while retrieving event: " + e.getMessage());
+        }
+        return response;
+    }
+
+    public ReqRes updateEvent(Long eventId, EventDTO eventDTO) {
+        ReqRes response = new ReqRes();
+        try {
+            Event event = eventService.getEvent(eventId);
+            event.setTitle(eventDTO.getTitle());
+            event.setDescription(eventDTO.getDescription());
+            event.setDate(eventDTO.getDate());
+            eventService.updateEvent(eventId, event);
+            response.setStatusCode(200);
+            response.setMessage("Event updated successfully");
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error occurred while updating event: " + e.getMessage());
+        }
+        return response;
+    }
+
+    public ReqRes deleteEvent(Long eventId) {
+        ReqRes response = new ReqRes();
+        try {
+            eventService.deleteEvent(eventId);
+            response.setStatusCode(200);
+            response.setMessage("Event deleted successfully");
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error occurred while deleting event: " + e.getMessage());
+        }
+        return response;
+    }
+
 
 
 }

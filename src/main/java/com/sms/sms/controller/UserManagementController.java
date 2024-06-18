@@ -1,5 +1,6 @@
     package com.sms.sms.controller;
 
+    import com.sms.sms.dto.EventDTO;
     import com.sms.sms.dto.ReqRes;
     import com.sms.sms.entity.OurUsers;
     import com.sms.sms.service.UsersManagementService;
@@ -60,6 +61,34 @@
             String email = authentication.getName();
             ReqRes response = usersManagementService.getMyInfo(email);
             return  ResponseEntity.status(response.getStatusCode()).body(response);
+        }
+
+        @PostMapping("/adminuser/create-event")
+        public ResponseEntity<ReqRes> createEvent(@RequestBody EventDTO eventDTO) {
+            return ResponseEntity.ok(usersManagementService.createEvent(eventDTO));
+        }
+
+        @GetMapping("/adminuser/get-events")
+        public ResponseEntity<ReqRes> getEvents() {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String email = authentication.getName();
+            ReqRes response = usersManagementService.getEvents(email);
+            return ResponseEntity.status(response.getStatusCode()).body(response);
+        }
+
+        @GetMapping("/adminuser/get-event/{eventId}")
+        public ResponseEntity<ReqRes> getEvent(@PathVariable Long eventId) {
+            return ResponseEntity.ok(usersManagementService.getEvent(eventId));
+        }
+
+        @PutMapping("/adminuser/update-event/{eventId}")
+        public ResponseEntity<ReqRes> updateEvent(@PathVariable Long eventId, @RequestBody EventDTO eventDTO) {
+            return ResponseEntity.ok(usersManagementService.updateEvent(eventId, eventDTO));
+        }
+
+        @DeleteMapping("/adminuser/delete-event/{eventId}")
+        public ResponseEntity<ReqRes> deleteEvent(@PathVariable Long eventId) {
+            return ResponseEntity.ok(usersManagementService.deleteEvent(eventId));
         }
 
 

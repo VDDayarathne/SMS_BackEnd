@@ -19,6 +19,6 @@ public class EventDTO {
     private String title;
     private String description;
     private Date date;
-    private String userEmail;
+    private String email;
 }
 

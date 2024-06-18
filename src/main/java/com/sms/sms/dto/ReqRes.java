@@ -2,6 +2,7 @@ package com.sms.sms.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.sms.sms.entity.Event;
 import com.sms.sms.entity.OurUsers;
 import lombok.Data;
 
@@ -28,6 +29,24 @@ public class ReqRes {
     private OurUsers ourUsers;
     private List<OurUsers> ourUsersList;
     private Integer userId;
+    private List<Event> events;
+    private Event event;
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
 
 
 }
