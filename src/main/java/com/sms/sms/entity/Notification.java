@@ -1,10 +1,7 @@
 package com.sms.sms.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jdk.jfr.Enabled;
 import lombok.*;
 
@@ -19,13 +16,57 @@ import java.util.Date;
 @EqualsAndHashCode
 @Data
 @Entity
-@Enabled
+@Table(name = "notifications")
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column
     private String message;
-    private String type; // e.g., "info", "warning", "error"
+    @Column
+    private Boolean isAdminOnly;
+    @Column
     private Date createdAt;
+    @Column
+    private String title;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Boolean getIsAdminOnly() {
+        return isAdminOnly;
+    }
+
+    public void setIsAdminOnly(Boolean isAdminOnly) {
+        this.isAdminOnly = isAdminOnly;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+
+
 
 }

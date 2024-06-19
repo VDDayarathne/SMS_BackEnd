@@ -3,12 +3,17 @@
     import com.sms.sms.dto.EventDTO;
     import com.sms.sms.dto.ReqRes;
     import com.sms.sms.entity.OurUsers;
+    import com.sms.sms.service.NotificationService;
     import com.sms.sms.service.UsersManagementService;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.ResponseEntity;
+    import org.springframework.security.access.prepost.PreAuthorize;
     import org.springframework.security.core.Authentication;
     import org.springframework.security.core.context.SecurityContextHolder;
     import org.springframework.web.bind.annotation.*;
+    import com.sms.sms.entity.Notification;
+
+    import java.util.List;
 
     @RequestMapping
     @RestController
@@ -89,6 +94,30 @@
         @DeleteMapping("/adminuser/delete-event/{eventId}")
         public ResponseEntity<ReqRes> deleteEvent(@PathVariable Long eventId) {
             return ResponseEntity.ok(usersManagementService.deleteEvent(eventId));
+        }
+
+
+
+
+        @Autowired
+        private NotificationService notificationService;
+
+
+        @GetMapping("/adminuser/get-notifications")
+        public List<Notification> getNotifications() {
+            return notificationService.getAllNotifications();
+        }
+
+        @PostMapping("/admin/create-notifications")
+        @PreAuthorize("hasAuthority('ADMIN')")
+        public Notification createNotification(@RequestBody Notification notification) {
+            return notificationService.createNotification(notification.getMessage(), false, notification.getTitle());
+        }
+
+        @DeleteMapping("/admin/delete-notifications/{id}")
+        @PreAuthorize("hasAuthority('ADMIN')")
+        public void deleteNotification(@PathVariable Long id) {
+            notificationService.deleteNotification(id);
         }
 
 
