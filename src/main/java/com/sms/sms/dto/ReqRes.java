@@ -3,6 +3,7 @@ package com.sms.sms.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.sms.sms.entity.Event;
+import com.sms.sms.entity.News;
 import com.sms.sms.entity.OurUsers;
 import lombok.Data;
 
@@ -31,6 +32,8 @@ public class ReqRes {
     private Integer userId;
     private List<Event> events;
     private Event event;
+    private List<News> data;
+    private String status;
 
     public void setEvents(List<Event> events) {
         this.events = events;
@@ -47,6 +50,11 @@ public class ReqRes {
     public Event getEvent() {
         return event;
     }
+
+    
+
+
+
 
 
 }

@@ -1,32 +1,29 @@
 package com.sms.sms.entity;
 
-
 import jakarta.persistence.*;
-import jdk.jfr.Enabled;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
-@Table(name = "notifications")
-public class Notification {
+@Table(name = "news")
+public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
-    private String message;
-    @Column
-    private Boolean isAdminOnly;
-    @Column
-    private Date createdAt;
-    @Column
     private String title;
+    private String description;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Date createdAt;
 
     public Long getId() {
         return id;
@@ -36,24 +33,20 @@ public class Notification {
         this.id = id;
     }
 
-    public String getMessage() {
-        return message;
+    public String getTitle() {
+        return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public String getDescription() {
+        return description;
     }
 
-    public Boolean getIsAdminOnly() {
-        return isAdminOnly;
-    }
-
-    public void setIsAdminOnly(Boolean isAdminOnly) {
-        this.isAdminOnly = isAdminOnly;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getCreatedAt() {
@@ -63,8 +56,4 @@ public class Notification {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-
-
-
-
 }

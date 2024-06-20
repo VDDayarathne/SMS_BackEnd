@@ -2,7 +2,10 @@
 
     import com.sms.sms.dto.EventDTO;
     import com.sms.sms.dto.ReqRes;
+    import com.sms.sms.dto.ResponseData;
+    import com.sms.sms.entity.News;
     import com.sms.sms.entity.OurUsers;
+    import com.sms.sms.service.NewsService;
     import com.sms.sms.service.NotificationService;
     import com.sms.sms.service.UsersManagementService;
     import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@
     import org.springframework.web.bind.annotation.*;
     import com.sms.sms.entity.Notification;
 
+    import java.util.Collections;
     import java.util.List;
 
     @RequestMapping
@@ -22,6 +26,12 @@
 
         @Autowired
         private UsersManagementService usersManagementService;
+
+        @Autowired
+        private NotificationService notificationService;
+
+        @Autowired
+        private NewsService newsService;
 
         @PostMapping("/auth/register")
         public ResponseEntity<ReqRes> regeister(@RequestBody ReqRes reg){
@@ -99,8 +109,7 @@
 
 
 
-        @Autowired
-        private NotificationService notificationService;
+
 
 
         @GetMapping("/adminuser/get-notifications")
@@ -118,6 +127,20 @@
         @PreAuthorize("hasAuthority('ADMIN')")
         public void deleteNotification(@PathVariable Long id) {
             notificationService.deleteNotification(id);
+        }
+
+        @GetMapping("/adminuser/latest-news")
+        public ResponseEntity<ResponseData> getLatestNews() {
+            List<News> latestNews = newsService.getAllNews();
+            ResponseData response = new ResponseData("Latest News", latestNews);
+            return ResponseEntity.ok(response);
+        }
+
+        @PostMapping("/admin/create-news")
+        public ResponseEntity<ResponseData> createNews(@RequestBody News news) {
+            newsService.createNews(news);
+            ResponseData response = new ResponseData("News created successfully", Collections.singletonList(news));
+            return ResponseEntity.ok(response);
         }
 
 
