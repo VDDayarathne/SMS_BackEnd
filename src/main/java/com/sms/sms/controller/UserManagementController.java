@@ -5,8 +5,10 @@
     import com.sms.sms.dto.ResponseData;
     import com.sms.sms.entity.News;
     import com.sms.sms.entity.OurUsers;
+    import com.sms.sms.entity.Tournament;
     import com.sms.sms.service.NewsService;
     import com.sms.sms.service.NotificationService;
+    import com.sms.sms.service.TournamentService;
     import com.sms.sms.service.UsersManagementService;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.ResponseEntity;
@@ -32,6 +34,9 @@
 
         @Autowired
         private NewsService newsService;
+
+        @Autowired
+        private TournamentService tournamentService;
 
         @PostMapping("/auth/register")
         public ResponseEntity<ReqRes> regeister(@RequestBody ReqRes reg){
@@ -141,6 +146,17 @@
             newsService.createNews(news);
             ResponseData response = new ResponseData("News created successfully", Collections.singletonList(news));
             return ResponseEntity.ok(response);
+        }
+
+        @GetMapping("/adminuser/get-tournaments")
+        public List<Tournament> getTournaments() {
+            return tournamentService.getAllTournaments();
+        }
+
+        @PostMapping("/admin/create-tournament")
+        @PreAuthorize("hasAuthority('ADMIN')")
+        public Tournament createTournament(@RequestBody Tournament tournament) {
+            return tournamentService.createTournament(tournament);
         }
 
 

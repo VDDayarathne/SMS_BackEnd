@@ -22,7 +22,7 @@ public class NotificationService {
         Notification notification = new Notification();
         notification.setMessage(message);
         notification.setTitle(title);
-        notification.setIsAdminOnly(isAdminOnly);
+        notification.setIsAdminOnly(false);
         notification.setCreatedAt(new Date());
         return notificationRepository.save(notification);
     }
