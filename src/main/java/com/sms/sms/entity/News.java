@@ -1,5 +1,6 @@
 package com.sms.sms.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,6 +23,8 @@ public class News {
     private String description;
 
     @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     @Column(updatable = false)
     private Date createdAt;
 
