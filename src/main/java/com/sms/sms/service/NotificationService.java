@@ -15,7 +15,7 @@ public class NotificationService {
     private NotificationRepository notificationRepository;
 
     public List<Notification> getAllNotifications() {
-        return notificationRepository.findByIsAdminOnlyFalse();
+        return notificationRepository.findTop15ByIsAdminOnlyFalseOrderByCreatedAtDesc();
     }
 
     public Notification createNotification(String message, Boolean isAdminOnly, String title) {

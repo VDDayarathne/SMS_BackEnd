@@ -17,7 +17,7 @@ public class TournamentController {
 
     @GetMapping
     public List<Tournament> getAllTournaments() {
-        return tournamentService.getAllTournaments();
+        return tournamentService.getLatestTournaments();
     }
 
     @PostMapping

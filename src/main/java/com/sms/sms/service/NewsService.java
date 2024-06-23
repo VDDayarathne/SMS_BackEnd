@@ -13,7 +13,7 @@ public class NewsService {
     private NewsRepository newsRepository;
 
     public List<News> getAllNews() {
-        return newsRepository.findAll();
+        return newsRepository.findTop10ByOrderByCreatedAtDesc();
     }
 
     public News createNews(News news) {
@@ -27,4 +27,9 @@ public class NewsService {
     public void deleteNews(Long id) {
         newsRepository.deleteById(id);
     }
+
+    public List<News> getLatestNews(int limit) {
+        return newsRepository.findTop10ByOrderByCreatedAtDesc();
+    }
+
 }

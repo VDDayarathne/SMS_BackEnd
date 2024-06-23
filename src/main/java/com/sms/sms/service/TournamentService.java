@@ -12,8 +12,8 @@ public class TournamentService {
     @Autowired
     private TournamentRepository tournamentRepository;
 
-    public List<Tournament> getAllTournaments() {
-        return tournamentRepository.findAll();
+    public List<Tournament> getLatestTournaments() {
+        return tournamentRepository.findTop10ByOrderByDateDesc();
     }
 
     public Tournament createTournament(Tournament tournament) {

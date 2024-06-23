@@ -136,7 +136,7 @@
 
         @GetMapping("/adminuser/latest-news")
         public ResponseEntity<ResponseData> getLatestNews() {
-            List<News> latestNews = newsService.getAllNews();
+            List<News> latestNews = newsService.getLatestNews(10);
             ResponseData response = new ResponseData("Latest News", latestNews);
             return ResponseEntity.ok(response);
         }
@@ -150,7 +150,7 @@
 
         @GetMapping("/adminuser/get-tournaments")
         public List<Tournament> getTournaments() {
-            return tournamentService.getAllTournaments();
+            return tournamentService.getLatestTournaments();
         }
 
         @PostMapping("/admin/create-tournament")

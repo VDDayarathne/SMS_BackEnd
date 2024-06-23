@@ -17,7 +17,7 @@ public class NewsController {
 
     @GetMapping
     public List<News> getAllNews() {
-        return newsService.getAllNews();
+        return newsService.getLatestNews(10);
     }
 
     @PostMapping
