@@ -3,20 +3,14 @@
     import com.sms.sms.dto.EventDTO;
     import com.sms.sms.dto.ReqRes;
     import com.sms.sms.dto.ResponseData;
-    import com.sms.sms.entity.News;
-    import com.sms.sms.entity.OurUsers;
-    import com.sms.sms.entity.Tournament;
-    import com.sms.sms.service.NewsService;
-    import com.sms.sms.service.NotificationService;
-    import com.sms.sms.service.TournamentService;
-    import com.sms.sms.service.UsersManagementService;
+    import com.sms.sms.entity.*;
+    import com.sms.sms.service.*;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.ResponseEntity;
     import org.springframework.security.access.prepost.PreAuthorize;
     import org.springframework.security.core.Authentication;
     import org.springframework.security.core.context.SecurityContextHolder;
     import org.springframework.web.bind.annotation.*;
-    import com.sms.sms.entity.Notification;
 
     import java.util.Collections;
     import java.util.List;
@@ -158,6 +152,32 @@
         public Tournament createTournament(@RequestBody Tournament tournament) {
             return tournamentService.createTournament(tournament);
         }
+
+
+        @Autowired
+        private InventoryService inventoryService;
+
+        @GetMapping("/adminuser/inventory")
+        public List<Inventory> getInventories() {
+            return inventoryService.getAllInventories();
+        }
+
+        @PostMapping("/admin/inventory")
+        public Inventory createInventory(@RequestBody Inventory inventory) {
+            return inventoryService.createInventory(inventory);
+        }
+
+        @PutMapping("/admin/inventory/{id}")
+        public Inventory updateInventory(@PathVariable Long id, @RequestBody Inventory inventory) {
+            return inventoryService.updateInventory(id, inventory);
+        }
+
+        @DeleteMapping("/admin/inventory/{id}")
+        public void deleteInventory(@PathVariable Long id) {
+            inventoryService.deleteInventory(id);
+        }
+
+
 
 
     }
