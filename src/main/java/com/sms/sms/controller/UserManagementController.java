@@ -177,6 +177,32 @@
             inventoryService.deleteInventory(id);
         }
 
+        @Autowired
+        private SportScheduleService sportScheduleService;
+
+        @GetMapping("/adminuser/sport-schedules")
+        public List<SportSchedule> getSportSchedules() {
+            return sportScheduleService.getAllSchedules();
+        }
+
+        @PostMapping("/admin/sport-schedules")
+        @PreAuthorize("hasAuthority('ADMIN')")
+        public SportSchedule createSportSchedule(@RequestBody SportSchedule schedule) {
+            return sportScheduleService.createSchedule(schedule);
+        }
+
+        @PutMapping("/admin/sport-schedules/{id}")
+        @PreAuthorize("hasAuthority('ADMIN')")
+        public SportSchedule updateSportSchedule(@PathVariable Long id, @RequestBody SportSchedule schedule) {
+            return sportScheduleService.updateSchedule(id, schedule);
+        }
+
+        @DeleteMapping("/admin/sport-schedules/{id}")
+        @PreAuthorize("hasAuthority('ADMIN')")
+        public void deleteSportSchedule(@PathVariable Long id) {
+            sportScheduleService.deleteSchedule(id);
+        }
+
 
 
 
