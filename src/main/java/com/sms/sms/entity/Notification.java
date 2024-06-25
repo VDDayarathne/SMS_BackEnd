@@ -27,6 +27,8 @@ public class Notification {
     private Date createdAt;
     @Column
     private String title;
+    @Column
+    private Date scheduled;
 
     public Long getId() {
         return id;

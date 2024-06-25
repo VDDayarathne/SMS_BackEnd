@@ -2,6 +2,7 @@ package com.sms.sms.service;
 
 import com.sms.sms.repo.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import com.sms.sms.entity.Notification;
 
@@ -29,6 +30,13 @@ public class NotificationService {
 
     public void deleteNotification(Long id) {
         notificationRepository.deleteById(id);
+    }
+
+    @Scheduled(fixedRate = 3600000) // run every 1 hour
+    public void deleteExpiredNotifications() {
+        Date now = new Date();
+        List<Notification> expiredNotifications = notificationRepository.findByScheduledBefore(now);
+        expiredNotifications.forEach(notification -> notificationRepository.deleteById(notification.getId()));
     }
 
 

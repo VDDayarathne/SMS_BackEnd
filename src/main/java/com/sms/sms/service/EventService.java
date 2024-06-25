@@ -4,8 +4,10 @@ package com.sms.sms.service;
 import com.sms.sms.entity.Event;
 import com.sms.sms.repo.EventRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,6 +40,12 @@ public class EventService {
     }
     public List<Event> getEventsByUserEmail(String email) {
         return eventRepo.findByEmail(email);
+    }
+
+    @Scheduled(fixedDelay = 3600000) // run every hour
+    public void removeExpiredEvents() {
+        Date oneWeekAgo = new Date(System.currentTimeMillis() - 604800000); // 1 week ago
+        eventRepo.deleteByPublishedDateBefore(oneWeekAgo);
     }
 
 }

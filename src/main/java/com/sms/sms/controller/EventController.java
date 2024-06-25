@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 import com.sms.sms.service.JWTUtils; // Import the JWTUtils class
@@ -37,6 +38,7 @@ public class EventController {
             throw new RuntimeException("Unauthorized access");
         }
         event.setEmail(email);
+        event.setPublishedDate(new Date());
         return eventService.createEvent(event);
     }
 
