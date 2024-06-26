@@ -21,12 +21,12 @@ public class Tournament {
     private Long id;
     @Column
     private String title;
-    @Column
+    @Column(length = 2000)
     private String description;
     @CreationTimestamp
     @Column(updatable = false)
     private Date date;
-    @Column
+    @Column(length = 1000)
     private String image;
     // getters and setters
 }

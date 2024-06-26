@@ -33,7 +33,8 @@ public class NewsController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void deleteNews(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteNews(@PathVariable Long id) {
         newsService.deleteNews(id);
+        return ResponseEntity.noContent().build();
     }
 }

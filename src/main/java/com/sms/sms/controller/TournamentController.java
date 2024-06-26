@@ -33,7 +33,8 @@ public class TournamentController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void deleteTournament(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTournament(@PathVariable Long id) {
         tournamentService.deleteTournament(id);
+        return ResponseEntity.noContent().build();
     }
 }

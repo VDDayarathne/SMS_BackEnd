@@ -142,6 +142,14 @@
             return ResponseEntity.ok(response);
         }
 
+        @DeleteMapping("/admin/delete-news/{id}")
+        @PreAuthorize("hasAuthority('ADMIN')")
+        public ResponseEntity<Void> deleteNews(@PathVariable Long id) {
+            newsService.deleteNews(id);
+            return ResponseEntity.noContent().build();
+        }
+
+
         @GetMapping("/adminuser/get-tournaments")
         public List<Tournament> getTournaments() {
             return tournamentService.getLatestTournaments();
@@ -152,6 +160,14 @@
         public Tournament createTournament(@RequestBody Tournament tournament) {
             return tournamentService.createTournament(tournament);
         }
+
+        @DeleteMapping("/admin/delete-tournament/{id}")
+        @PreAuthorize("hasAuthority('ADMIN')")
+        public ResponseEntity<Void> deleteTournament(@PathVariable Long id) {
+            tournamentService.deleteTournament(id);
+            return ResponseEntity.noContent().build();
+        }
+
 
 
         @Autowired
