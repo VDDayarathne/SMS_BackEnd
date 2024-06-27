@@ -17,6 +17,6 @@ public class SportSchedule {
     private String venue;
     private String time;
     private String sport;
-    private String ground; // indoor, outdoor1, outdoor2, swimming pool
+    private String description; // indoor, outdoor1, outdoor2, swimming pool
 
 }

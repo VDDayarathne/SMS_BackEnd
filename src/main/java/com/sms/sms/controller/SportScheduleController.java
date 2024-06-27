@@ -36,4 +36,10 @@ public class SportScheduleController {
     public void deleteSchedule(@PathVariable Long id) {
         sportScheduleService.deleteSchedule(id);
     }
+
+    @GetMapping("/{date}")
+    public List<SportSchedule> getSchedulesByDate(@PathVariable String date) {
+        return sportScheduleService.getSchedulesByDate(date);
+    }
+
 }

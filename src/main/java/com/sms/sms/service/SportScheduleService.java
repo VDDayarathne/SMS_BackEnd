@@ -26,11 +26,16 @@ public class SportScheduleService {
         existingSchedule.setVenue(schedule.getVenue());
         existingSchedule.setTime(schedule.getTime());
         existingSchedule.setSport(schedule.getSport());
-        existingSchedule.setGround(schedule.getGround());
+        existingSchedule.setDescription(schedule.getDescription());
         return sportScheduleRepository.save(existingSchedule);
     }
 
     public void deleteSchedule(Long id) {
         sportScheduleRepository.deleteById(id);
     }
+
+    public List<SportSchedule> getSchedulesByDate(String date) {
+        return sportScheduleRepository.findByDate(date);
+    }
+
 }
