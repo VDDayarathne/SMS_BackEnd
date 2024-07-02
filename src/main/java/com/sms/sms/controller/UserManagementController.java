@@ -221,5 +221,41 @@
 
 
 
+        @Autowired
+        private ItemIssuingRegisterService itemIssuingRegisterService;
+
+        @PostMapping("/admin/create-item-issuing-register")
+        @PreAuthorize("hasAuthority('ADMIN')")
+        public ItemIssuingRegister createItemIssuingRegister(@RequestBody ItemIssuingRegister itemIssuingRegister) {
+            return itemIssuingRegisterService.createItemIssuingRegister(itemIssuingRegister);
+        }
+
+        @GetMapping("/admin/get-all-item-issuing-registers")
+        @PreAuthorize("hasAuthority('ADMIN')")
+        public List<ItemIssuingRegister> getAllItemIssuingRegisters() {
+            return itemIssuingRegisterService.getAllItemIssuingRegisters();
+        }
+
+        @GetMapping("/admin/get-item-issuing-register/{id}")
+        @PreAuthorize("hasAuthority('ADMIN')")
+        public ItemIssuingRegister getItemIssuingRegisterById(@PathVariable Integer id) {
+            return itemIssuingRegisterService.getItemIssuingRegisterById(id);
+        }
+
+        @PutMapping("/admin/update-item-issuing-register/{id}")
+        @PreAuthorize("hasAuthority('ADMIN')")
+        public ItemIssuingRegister updateItemIssuingRegister(@PathVariable Integer id, @RequestBody ItemIssuingRegister itemIssuingRegister) {
+            return itemIssuingRegisterService.updateItemIssuingRegister(id, itemIssuingRegister);
+        }
+
+        @DeleteMapping("/admin/delete-item-issuing-register/{id}")
+        @PreAuthorize("hasAuthority('ADMIN')")
+        public void deleteItemIssuingRegister(@PathVariable Integer id) {
+            itemIssuingRegisterService.deleteItemIssuingRegister(id);
+        }
+
+
+
+
 
     }
