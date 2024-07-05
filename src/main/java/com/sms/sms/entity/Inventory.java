@@ -6,16 +6,17 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @Entity
-@Table(name = "inventories")
 @Data
+@Table(name = "inventories")
 public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
     private String description;
     private Integer quantity;
     @ManyToOne
@@ -24,6 +25,6 @@ public class Inventory {
     @ManyToOne
     @JoinColumn(name = "equipment_id")
     private Equipment equipment;
-
-
+    private Date updatedAt;
+    // getters and setters
 }
