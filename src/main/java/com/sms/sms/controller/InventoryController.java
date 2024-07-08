@@ -36,17 +36,6 @@ public class InventoryController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Inventory> createInventory(@RequestBody Inventory inventory) {
-        Optional<Equipment> optionalEquipment = equipmentRepository.findById(inventory.getEquipment().getId());
-        Equipment equipment;
-        if (optionalEquipment.isPresent()) {
-            equipment = optionalEquipment.get();
-        } else {
-            equipment = new Equipment();
-            equipment.setId(inventory.getEquipment().getId());
-            equipment.setName(inventory.getEquipment().getName()); // Set other fields if necessary
-            equipment = equipmentRepository.save(equipment);
-        }
-        inventory.setEquipment(equipment);
         try {
             Inventory createdInventory = inventoryService.createInventory(inventory);
             return new ResponseEntity<>(createdInventory, HttpStatus.CREATED);
@@ -54,6 +43,7 @@ public class InventoryController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")

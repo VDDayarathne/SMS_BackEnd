@@ -31,17 +31,18 @@ public class InventoryService {
 
     public Inventory createInventory(Inventory inventory) {
         Equipment equipment = inventory.getEquipment();
-        if (equipment!= null && equipment.getId()!= null) {
-            Optional<Equipment> optionalEquipment = equipmentRepository.findById(equipment.getId());
+        if (equipment!= null) {
+            Optional<Equipment> optionalEquipment = equipmentRepository.findByName(equipment.getName());
             if (optionalEquipment.isPresent()) {
                 inventory.setEquipment(optionalEquipment.get());
-                inventory.setUpdatedAt(new Date());
-                return inventoryRepository.save(inventory);
             } else {
-                throw new EntityNotFoundException("Equipment not found with id: " + equipment.getId());
+                equipment = equipmentRepository.save(equipment);
+                inventory.setEquipment(equipment);
             }
+            inventory.setUpdatedAt(new Date());
+            return inventoryRepository.save(inventory);
         } else {
-            throw new IllegalArgumentException("Invalid Equipment object. Equipment id must not be null.");
+            throw new IllegalArgumentException("Invalid Equipment object. Equipment cannot be null.");
         }
     }
 

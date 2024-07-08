@@ -192,17 +192,6 @@
         @PostMapping("/admin/inventory")
         @PreAuthorize("hasRole('ADMIN')")
         public ResponseEntity<Inventory> createInventory(@RequestBody Inventory inventory) {
-            Optional<Equipment> optionalEquipment = equipmentRepository.findById(inventory.getEquipment().getId());
-            Equipment equipment;
-            if (optionalEquipment.isPresent()) {
-                equipment = optionalEquipment.get();
-            } else {
-                equipment = new Equipment();
-                equipment.setId(inventory.getEquipment().getId());
-                equipment.setName(inventory.getEquipment().getName()); // Set other fields if necessary
-                equipment = equipmentRepository.save(equipment);
-            }
-            inventory.setEquipment(equipment);
             try {
                 Inventory createdInventory = inventoryService.createInventory(inventory);
                 return new ResponseEntity<>(createdInventory, HttpStatus.CREATED);
@@ -210,6 +199,7 @@
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
+
 
         @PutMapping("/admin/inventory/{id}")
         @PreAuthorize("hasRole('ADMIN')")
