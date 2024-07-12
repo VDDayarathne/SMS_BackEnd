@@ -1,6 +1,7 @@
 package com.sms.sms.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class Inventory {
     @ManyToOne
     @JoinColumn(name = "equipment_id")
     private Equipment equipment;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private Date updatedAt;
     // getters and setters
 }
